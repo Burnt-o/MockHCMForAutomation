@@ -1,0 +1,16 @@
+
+name: TestAction
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  log:
+    runs-on: windows-latest
+    steps:
+    - name: Logging
+      run: |
+        echo "${{toJSON(github.event)}}"
