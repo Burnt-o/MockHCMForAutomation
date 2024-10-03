@@ -55,10 +55,13 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
+    - name: Get current timestamp
+      run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: upload-build # Artifact name. Must be unique. Should we use a timestamp?
+        name: build-${{ github.sha }}-{{ $TIMESTMAP }}# Artifact name. Must be unique, so mix in commit hash and timestamp.
         path: ${{env.SOLUTION_FILE_PATH}}/MockExternal/bin/${{ inputs.buildConfiguration }}/net7.0-windows
         if-no-files-found: error
 
