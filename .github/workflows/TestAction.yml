@@ -20,12 +20,16 @@ jobs:
       - id: get_head_commit_title
         run: echo "title=$(git log --format=%B -n 1 HEAD | head -n 1)" >> $GITHUB_OUTPUT
   log:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Logging
       run: |
         echo "Last commit title was: $TITLE"
         echo "Last commit full message was: $MESSAGE"
+        echo "Full github event: $FULLJSON"
+        echo "Alt: $ALT"
       env:
         MESSAGE: ${{ github.event.head_commit.message }}
         TITLE: ${{ needs.get-commit-title.outputs.text }}
+        FULLJSON: ${{ github.event }}
+        ALT: ${{ github.event.workflow_run.head_commit.message }}
