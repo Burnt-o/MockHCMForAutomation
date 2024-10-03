@@ -23,7 +23,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Logging
-    - run: |
+      run: |
         echo "Last commit title was: $TITLE
         echo "Last commit full message was: $MESSAGE
       env:
