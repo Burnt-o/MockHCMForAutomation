@@ -27,7 +27,9 @@ jobs:
         echo "Last commit title was: $TITLE"
         echo "Last commit full message was: $MESSAGE"
         echo "Alt: $ALT"
+        echo "ANYTHING: $ANYTHING"
       env:
         MESSAGE: ${{ github.event.head_commit.message }}
         TITLE: ${{ needs.get-commit-title.outputs.text }}
         ALT: ${{ github.event.workflow_dispatch.head_commit.message }}
+        ANYTHING: ${{ github.event_name }}
