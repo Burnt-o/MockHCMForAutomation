@@ -61,7 +61,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: build-${{ github.sha }}-{{ $TIMESTMAP }}# Artifact name. Must be unique, so mix in commit hash and timestamp.
+        name: build-${{ github.sha }}-{{ $TIMESTAMP }} # Artifact name. Must be unique, so mix in commit hash and timestamp.
         path: ${{env.SOLUTION_FILE_PATH}}/MockExternal/bin/${{ inputs.buildConfiguration }}/net7.0-windows
         if-no-files-found: error
 
