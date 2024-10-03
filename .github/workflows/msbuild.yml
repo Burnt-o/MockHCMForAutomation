@@ -41,7 +41,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
@@ -55,12 +55,10 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
-  upload:
-    needs: build
-    runs-on: windows-latest
-    steps:
+    - name: Upload artifact
     - uses: actions/upload-artifact@v4
       with:
-        name: upload-build
+        name: upload-build # Artifact name. Must be unique. Should we use a timestamp?
         path: ${{env.SOLUTION_FILE_PATH}}/MockExternal/bin/${{ inputs.buildConfiguration }}/net7.0-windows
         if-no-files-found: error
+
