@@ -24,8 +24,8 @@ jobs:
     steps:
     - name: Logging
       run: |
-        echo "Last commit title was: $TITLE
-        echo "Last commit full message was: $MESSAGE
+        echo "Last commit title was: $TITLE"
+        echo "Last commit full message was: $MESSAGE"
       env:
         MESSAGE: ${{ github.event.head_commit.message }}
         TITLE: ${{ needs.get-commit-title.outputs.text }}
