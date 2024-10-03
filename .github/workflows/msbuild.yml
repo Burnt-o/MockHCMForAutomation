@@ -6,24 +6,36 @@
 name: MSBuild
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  workflow_dispatch:
+     inputs:
+       buildConfiguration:
+         description: 'Build Configuration'
+         default: 'Release'
+         type: choice
+         options:
+         - 'Debug'
+         - 'Release'
+         required: true
 
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: Release
+  # Determined by workflow_dispatch input "buildConfiguration"
+  BUILD_CONFIGURATION: ${{ inputs.buildConfiguration }}
 
 permissions:
   contents: read
 
 jobs:
+  log-the-inputs:
+    runs-on: windows-latest
+    steps:
+      - run: |
+          echo "Build Configuration: $BUILDCONFIG"
+        env:
+          BUILDCONFIG: ${{ inputs.buildConfiguration }}
+
   build:
     runs-on: windows-latest
 
