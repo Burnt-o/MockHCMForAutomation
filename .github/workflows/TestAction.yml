@@ -8,9 +8,24 @@ permissions:
   contents: read
 
 jobs:
+  get-commit-title:
+    runs-on: ubuntu-latest
+    outputs:
+      text: ${{ steps.get_head_commit_title.outputs.title }}
+    steps:
+      - name: Get repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
+      - id: get_head_commit_title
+        run: echo "title=$(git log --format=%B -n 1 HEAD | head -n 1)" >> $GITHUB_OUTPUT
   log:
     runs-on: windows-latest
     steps:
     - name: Logging
+    env:
+      MESSAGE: ${{ github.event.head_commit.message }}
+      TITLE: ${{ needs.get-commit-title.outputs.text }}
       run: |
-        echo "${{ github.event.head_commit.message }}"
+        echo "Last commit title was: $TITLE
+        echo "Last commit full message was: $MESSAGE
